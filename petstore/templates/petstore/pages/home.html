@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <h1>
+        TESTE: {{ nome }}
+    </h1>
+    <h2>
+        {% for animal in animals %}
+        {{ animal.name }}
+        {% endfor %}
+    </h2>
+    <h3>
+        {% if detail is True %}
+        {% for animal in animals %}
+        {{ animal.cover|linebreaksbr }}
+        {% endfor %}
+        {% endif %}
+    </h3>
+
+</body>
+</html>
