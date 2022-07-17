@@ -1,8 +1,8 @@
 from django.shortcuts import render
-
+from .forms import RegisterForm
 
 def register_view(request):
-    nome = 'TESTE APP CLIENTS'
+    form = RegisterForm
     return render(request, 'clients/pages/register_author.html', context={
-        'nome': nome,
+        'form': form,
     })
