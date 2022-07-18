@@ -6,7 +6,8 @@ from clients.forms import LoginForm
 from clients.forms.register_form import RegisterForm
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
-
+from petstore.models import Animal
+from petstore.forms import AnimalForm
 
 def register_view(request):
     register_form_data = request.session.get('register_form_data', None)
@@ -77,3 +78,40 @@ def logout_view(request):
 
     logout(request)
     return redirect(reverse('login'))
+
+
+@login_required(login_url='authors:login', redirect_field_name='next')
+def dashboard(request):
+    animals = Animal.objects.filter(
+        author=request.user
+    )
+    return render(
+        request,
+        'clients/pages/dashboard.html',
+        context={
+            'animals': animals,
+        }
+    )
+
+@login_required(login_url='login', redirect_field_name='next')
+def dashboard_edit(request, id):
+    animals = Animal.objects.filter(
+        author=request.user,
+        pk=id,
+    ).first()
+
+    if not animals:
+        raise Http404()
+
+    form = AnimalForm(
+        data=request.POST or None,
+        instance=animals
+    )
+
+    return render(
+        request,
+        'clients/pages/dashboard_animal.html',
+        context={
+            'animals': animals,
+        }
+    )

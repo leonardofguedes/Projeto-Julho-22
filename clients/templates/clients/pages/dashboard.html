@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="main-content center container">
+        <h2>Dashboard ({{ user }})</h2>
+
+        <div class="authors-dashboard-container">
+          <h3>Seus cadastros</h3>
+
+          <ul>
+            {% for animal in animals %}
+              <li>
+                <a href="{% url 'dashboard_animal_edit' animal.id %}">{{ animal.title }}</a>
+              </li>
+            {% empty %}
+              <li>
+                <p>You do not have recipes, please create one.</p>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+</body>
+</html>

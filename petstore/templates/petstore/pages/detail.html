@@ -5,21 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-        {{ nome }}
-        <ol>
-            {% for animal in animals %}
-                <li>
+   <li>
                     Nome: {{ animal.name }}
                     Espécie: {{ animal.species }}
                     Idade: {{ animal.age }}
                     Cidade: {{ animal.city }}
                     Castrado: {{ animal.castrated }}
                     Raça: {{ animal.breed }}
-                </li>
-                <a href="{% url 'one-only' animal.id %}"><button>Consulte</button></a>
-            {% endfor %}
-        </ol>
-
-
+   </li>
 </body>
 </html>
