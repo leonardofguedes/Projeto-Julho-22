@@ -6,23 +6,19 @@
 </head>
 <body>
 
-    <h1>
-        TESTE: {{ nome }}
-    </h1>
-    <h2>
         <ol>
             {% for animal in animals %}
-                <li>{{ animal.name }}</li>
+                <li>
+                    Nome: {{ animal.name }}
+                    Espécie: {{ animal.species }}
+                    Idade: {{ animal.age }}
+                    Cidade: {{ animal.city }}
+                    Castrado: {{ animal.castrated }}
+                    Raça: {{ animal.breed }}
+                </li>
             {% endfor %}
         </ol>
-    </h2>
-    <h3>
-        {% if detail is True %}
-        {% for animal in animals %}
-        {{ animal.cover|linebreaksbr }}
-        {% endfor %}
-        {% endif %}
-    </h3>
+
 
 </body>
 </html>
