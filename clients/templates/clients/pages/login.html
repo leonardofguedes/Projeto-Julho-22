@@ -5,6 +5,20 @@
     <title>Title</title>
 </head>
 <body>
+    {% if not user.is_authenticated %}
+        {% include 'clients/partials/form.html' %}
+    {% else %}
+      <div>
+        Your are logged in with
+        {{ request.user.username }}
+        Please,
+        <form class="inline-form" action="{% url 'logout' %}" method='POST'>
+          {% csrf_token %}
+          <input type="hidden" name="username" value="{{ request.user.username }}">
+          <button class="plaintext-button" type="submit">click here</button>
+        </form> to logout.
+      </div>
+    {% endif %}
     {% for message in messages %}
         <div class="message {{ message.tags }}">
             {{ message }}
