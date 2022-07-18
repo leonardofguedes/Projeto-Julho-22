@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import *
+from petstore.models import *
 
 
 def home_view(request):

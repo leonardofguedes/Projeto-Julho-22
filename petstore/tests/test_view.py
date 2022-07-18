@@ -1,6 +1,6 @@
 from unittest import TestCase
 from django.urls import resolve, reverse
-from petstore.views import *
+from petstore.views.views import *
 
 
 class ViewTest(TestCase):
