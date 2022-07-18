@@ -18,6 +18,11 @@
             </li>
             {% endfor %}
             <button type="submit">Send</button>
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">
+            {{ message }}
+            {% endfor %}
+            </div>
             </form>
         </div>
     </ol>
