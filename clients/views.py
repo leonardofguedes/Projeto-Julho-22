@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from .forms import RegisterForm
+from clients.forms.register_form import RegisterForm
 from django.http import Http404
 
 
