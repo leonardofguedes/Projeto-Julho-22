@@ -3,12 +3,14 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from django.http import Http404
 
+
 def register_view(request):
     register_form_data = request.session.get('register_form_data', None)
     form = RegisterForm(register_form_data)
     return render(request, 'clients/pages/register_author.html', context={
         'form': form,
     })
+
 
 def register_create(request):
     if not request.POST:
@@ -26,3 +28,11 @@ def register_create(request):
         del(request.session['register_form_data'])
 
     return redirect('register')
+
+
+def login_view(request):
+    return render(request, 'authors/pages/login.html')
+
+
+def login_create(request):
+    return render(request, 'authors/pages/login.html')
