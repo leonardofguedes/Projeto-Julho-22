@@ -10,9 +10,11 @@
         TESTE: {{ nome }}
     </h1>
     <h2>
-        {% for animal in animals %}
-        {{ animal.name }}
-        {% endfor %}
+        <ol>
+            {% for animal in animals %}
+                <li>{{ animal.name }}</li>
+            {% endfor %}
+        </ol>
     </h2>
     <h3>
         {% if detail is True %}
