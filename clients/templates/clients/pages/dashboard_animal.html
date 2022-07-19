@@ -8,6 +8,7 @@
     {% include 'global/partials/menu.html' %}
 </header>
 <body>
+    {% include 'global/partials/messages.html' %}
     {% if user.is_authenticated %}
     <div class="login-message">
           Your are logged in with
