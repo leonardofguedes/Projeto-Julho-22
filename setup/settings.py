@@ -56,7 +56,9 @@ ROOT_URLCONF = 'setup.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'global_templates'),
+                 os.path.join(BASE_DIR, 'petstore', 'global', 'clients'),
+                ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
