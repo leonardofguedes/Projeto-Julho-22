@@ -8,6 +8,7 @@
     {% include 'global/partials/menu.html' %}
 </header>
 <body>
+    {% include 'global/partials/messages.html' %}
     {% if not user.is_authenticated %}
         {% include 'clients/partials/form.html' %}
     {% else %}
