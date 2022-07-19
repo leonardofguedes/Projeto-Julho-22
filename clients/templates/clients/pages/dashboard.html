@@ -14,16 +14,22 @@
 
         <div class="authors-dashboard-container">
           <h3>Seus cadastros</h3>
-
           <ul>
             {% for animal in animals %}
               <li>
-                <a href="{% url 'dashboard_animal_edit' animal.id %}">{{ animal.title }}</a>
-              </li>
-            {% empty %}
-              <li>
-                <p>You do not have recipes, please create one.</p>
-              </li>
+                <a href="{% url 'dashboard-edit' animal.id %}">{{ animal.name }}</a>
+                  <form action="{% url 'dashboard-animal-delete' %}" method='POST'>
+                      {% csrf_token %}
+                      <input type="hidden" name="id" value="{{ animal.id }}">
+                      <button class="plaintext-button" type="submit">❌</button>
+                  </form>
+            </li>
+
+{% empty %}
+  <li>
+    <p>Você não tem animais cadastrados ainda.</p>
+  </li>
+
             {% endfor %}
           </ul>
         </div>

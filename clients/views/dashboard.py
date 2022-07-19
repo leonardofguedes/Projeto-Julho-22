@@ -6,9 +6,11 @@ from django.urls import reverse
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from petstore.models import Animal
+
 
 @method_decorator(
-    login_required(login_url='authors:login', redirect_field_name='next'),
+    login_required(login_url='login', redirect_field_name='next'),
     name='dispatch'
 )
 class Dashboard(View):
@@ -28,8 +30,7 @@ class Dashboard(View):
         animal = None
 
         if id is not None:
-            animal = Imovel.objects.filter(
-                is_published=False,
+            animal = Animal.objects.filter(
                 author=self.request.user,
                 pk=id,
             ).first()
@@ -42,16 +43,16 @@ class Dashboard(View):
     def render_animal(self, form):
         return render(
             self.request,
-            'clients/pages/dashboard_imovel.html',
+            'clients/pages/dashboard_animal.html',
             context={
                 'form': form
             }
         )
 
     def get(self, request, id=None):
-        animal = self.get_imovel(id)
+        animal = self.get_animal(id)
         form = AnimalForm(instance=animal)
-        return self.render_imovel(form)
+        return self.render_animal(form)
 
     def post(self, request, id=None):
         animal = self.get_animal(id)
@@ -66,7 +67,6 @@ class Dashboard(View):
             animal = form.save(commit=False)
 
             animal.author = request.user
-            animal.is_published = False
             animal.save()
 
             messages.success(request, 'O animal foi salvo com sucesso!')
