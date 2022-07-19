@@ -8,9 +8,15 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('login/create/', login_create, name='login_create'),
     path('logout/', logout_view, name='logout'),
-    path('dashboard/', Dashboard, name='dashboard'),
+    path('dashboard/', dashboard, name='dashboard'),
+    path('dashboard/animal/new/',
+         Dashboard.as_view(),
+         name='dashboard-animal-new'),
+    path('dashboard/animal/delete/',
+         Dashboard_Delete.as_view(),
+         name='dashboard-animal-delete'),
     path('dashboard/animal/<int:id>/edit/',
-         dashboard_edit,
-         name='dashboard_edit'
+         Dashboard.as_view(),
+         name='dashboard-edit'
          ),
 ]

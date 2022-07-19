@@ -83,15 +83,11 @@ def logout_view(request):
     return redirect(reverse('login'))
 
 
-@login_required(login_url='authors:login', redirect_field_name='next')
+@login_required(login_url='login', redirect_field_name='next')
 def dashboard(request):
     animals = Animal.objects.filter(
-        author=request.user
+        author=request.user,
     )
-    return render(
-        request,
-        'clients/pages/dashboard.html',
-        context={
-            'animals': animals,
-        }
-    )
+    return render(request, 'clients/pages/dashboard.html',
+        context={'animals': animals,}
+                  )

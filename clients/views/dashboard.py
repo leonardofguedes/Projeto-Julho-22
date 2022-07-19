@@ -1,33 +1,34 @@
 from petstore.forms import AnimalForm
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.http.response import Http404
+from django.http import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.utils.decorators import method_decorator
 from django.views import View
-from petstore.models import Animal
-
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 @method_decorator(
-    login_required(login_url='login', redirect_field_name='next'),
+    login_required(login_url='authors:login', redirect_field_name='next'),
     name='dispatch'
 )
 class Dashboard(View):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
     def setup(self, *args, **kwargs):
         return super().setup(*args, **kwargs)
 
+
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
+
 
     def get_animal(self, id=None):
         animal = None
 
         if id is not None:
-            animal = Animal.objects.filter(
+            animal = Imovel.objects.filter(
                 is_published=False,
                 author=self.request.user,
                 pk=id,
@@ -41,16 +42,16 @@ class Dashboard(View):
     def render_animal(self, form):
         return render(
             self.request,
-            'clients/pages/dashboard.html',
+            'clients/pages/dashboard_imovel.html',
             context={
                 'form': form
             }
         )
 
     def get(self, request, id=None):
-        animal = self.get_animal(id)
+        animal = self.get_imovel(id)
         form = AnimalForm(instance=animal)
-        return self.render_recipe(form)
+        return self.render_imovel(form)
 
     def post(self, request, id=None):
         animal = self.get_animal(id)
@@ -65,30 +66,22 @@ class Dashboard(View):
             animal = form.save(commit=False)
 
             animal.author = request.user
-            animal.preparation_steps_is_html = False
             animal.is_published = False
-
             animal.save()
 
-            messages.success(request, 'Sua receita foi salva com sucesso!')
-            return redirect(
-                reverse(
-                    'dashboard_recipe_edit', args=(
-                        animal.id,
-                    )
-                )
-            )
+            messages.success(request, 'O animal foi salvo com sucesso!')
+            return redirect(reverse(
+                'dashboard-edit', args=(animal.id,)))
 
         return self.render_animal(form)
-
 
 @method_decorator(
     login_required(login_url='login', redirect_field_name='next'),
     name='dispatch'
 )
-class DashboardDelete(Dashboard):
+class Dashboard_Delete(Dashboard):
     def post(self, *args, **kwargs):
         animal = self.get_animal(self.request.POST.get('id'))
         animal.delete()
-        messages.success(self.request, 'Deleted successfully.')
+        messages.success(self.request, 'Deleted Successfully')
         return redirect(reverse('dashboard'))
