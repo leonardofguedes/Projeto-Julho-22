@@ -9,5 +9,5 @@ class ViewTest(TestCase):
         self.assertIs(view.func, home_view)
 
     def test_one_only_view_is_correct(self):
-        view = resolve(reverse('one-only'))
+        view = resolve(reverse('one-only', kwargs={'id':5000}))
         self.assertIs(view.func, one_only_view)
