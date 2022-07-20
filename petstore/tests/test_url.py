@@ -10,7 +10,3 @@ class PetStoreURLTest(TestCase):
     def test_url_one_only(self):
         one_only = reverse('one-only', kwargs={'id': 5000})
         self.assertEqual(one_only, '/pet/5000/')
-
-    def test_url_pet_add(self):
-        pet_add = reverse('pet-register')
-        self.assertEqual(pet_add, '/pet/pet-add/')
