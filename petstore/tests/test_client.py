@@ -1,6 +1,5 @@
 import pytest
-from django.urls import resolve, reverse
-from petstore.views.views import *
+from django.urls import reverse
 from django.test import Client
 from petstore.tests.test_base import TestBase
 

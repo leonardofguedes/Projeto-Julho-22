@@ -7,12 +7,12 @@ from parameterized import parameterized
 
 class AuthorRegisterFormUnitTest(TestCase):
     @parameterized.expand([
-        ('username', 'Your username'),
-        ('email', 'Your e-mail'),
-        ('first_name', 'Ex.: John'),
-        ('last_name', 'Ex.: Doe'),
-        ('password', 'Type your password'),
-        ('password2', 'Repeat your password'),
+        ('username', 'Username'),
+        ('email', 'Seu e-mail'),
+        ('first_name', 'Ex: Pedro'),
+        ('last_name', 'Ex: Silva'),
+        ('password', 'Sua senha'),
+        ('password2', 'Repita a senha'),
     ])
     def test_fields_placeholder(self, field, placeholder):
         form = RegisterForm()
@@ -21,14 +21,12 @@ class AuthorRegisterFormUnitTest(TestCase):
 
     @parameterized.expand([
         ('username', (
-            'Username must have letters, numbers or one of those @.+-_. '
-            'The length should be between 4 and 150 characters.'
+            'Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'
         )),
-        ('email', 'The e-mail must be valid.'),
+        ('email', 'O email precisa ser válido'),
         ('password', (
-            'Password must have at least one uppercase letter, '
-            'one lowercase letter and one number. The length should be '
-            'at least 8 characters.'
+                'A senha precisa de uma letra maiúscula, uma minúscula e um número.Ela não '
+                'pode ter menos que 8 caracteres'
         )),
     ])
     def test_fields_help_text(self, field, needed):
@@ -38,11 +36,9 @@ class AuthorRegisterFormUnitTest(TestCase):
 
     @parameterized.expand([
         ('username', 'Username'),
-        ('first_name', 'First name'),
-        ('last_name', 'Last name'),
+        ('first_name', 'Primeiro nome'),
+        ('last_name', 'Último nome'),
         ('email', 'E-mail'),
-        ('password', 'Password'),
-        ('password2', 'Password2'),
     ])
     def test_fields_label(self, field, needed):
         form = RegisterForm()
@@ -72,7 +68,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
     ])
     def test_fields_cannot_be_empty(self, field, msg):
         self.form_data[field] = ''
-        url = reverse('authors:create')
+        url = reverse('create')
         response = self.client.post(url, data=self.form_data, follow=True)
 
         self.assertIn(msg, response.content.decode('utf-8'))
@@ -80,7 +76,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
 
     def test_username_field_min_length_should_be_4(self):
         self.form_data['username'] = 'joa'
-        url = reverse('authors:create')
+        url = reverse('create')
         response = self.client.post(url, data=self.form_data, follow=True)
 
         msg = 'Username must have at least 4 characters'
@@ -89,7 +85,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
 
     def test_username_field_max_length_should_be_150(self):
         self.form_data['username'] = 'A' * 151
-        url = reverse('authors:create')
+        url = reverse('create')
         response = self.client.post(url, data=self.form_data, follow=True)
 
         msg = 'Username must have less than 150 characters'
@@ -99,7 +95,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
 
     def test_password_field_have_lower_upper_case_letters_and_numbers(self):
         self.form_data['password'] = 'abc123'
-        url = reverse('authors:create')
+        url = reverse('create')
         response = self.client.post(url, data=self.form_data, follow=True)
 
         msg = (
@@ -112,7 +108,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         self.assertIn(msg, response.content.decode('utf-8'))
 
         self.form_data['password'] = '@A123abc123'
-        url = reverse('authors:create')
+        url = reverse('create')
         response = self.client.post(url, data=self.form_data, follow=True)
 
         self.assertNotIn(msg, response.context['form'].errors.get('password'))
@@ -121,7 +117,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         self.form_data['password'] = '@A123abc123'
         self.form_data['password2'] = '@A123abc1235'
 
-        url = reverse('authors:create')
+        url = reverse('create')
         response = self.client.post(url, data=self.form_data, follow=True)
 
         msg = 'Password and password2 must be equal'
@@ -132,7 +128,7 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         self.form_data['password'] = '@A123abc123'
         self.form_data['password2'] = '@A123abc123'
 
-        url = reverse('authors:create')
+        url = reverse('create')
         response = self.client.post(url, data=self.form_data, follow=True)
 
         self.assertNotIn(msg, response.content.decode('utf-8'))
