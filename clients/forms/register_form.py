@@ -19,7 +19,7 @@ class RegisterForm(forms.ModelForm):
             'placeholder': 'Sua senha'
         }),
         error_messages={
-            'required': 'A senha pode não ser vazia'
+            'required': 'A senha não pode ser vazia'
         },
         help_text=(
             'A senha precisa de uma letra maiúscula, uma minúscula e um número.'
