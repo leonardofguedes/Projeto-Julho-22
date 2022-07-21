@@ -18,3 +18,15 @@ def one_only_view(request, id):
         'animal': animal,
         'detail' : True,
     })
+
+def theory(request, *args, **kwargs):
+    animais = Animal.objects.all()
+    polo = {'libelula': 'libelula'}
+    return render(
+        request,
+        'petstore/pages/theory.html',
+        context={
+            'polo' : polo,
+            'animais' : animais,
+        }
+    )
